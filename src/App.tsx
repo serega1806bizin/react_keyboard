@@ -7,6 +7,7 @@ type AppState = {
 class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
+    // eslint-disable-next-line react/state-in-constructor
     this.state = {
       pressedKey: null,
     };
@@ -31,9 +32,9 @@ class App extends Component<{}, AppState> {
     const { pressedKey } = this.state;
 
     return (
-      <div>
+      <div className="App__message">
         {pressedKey
-          ? `The last pressed key is [${pressedKey}]`
+          ? `The last pressed key is ${pressedKey}`
           : 'Nothing was pressed yet'}
       </div>
     );
