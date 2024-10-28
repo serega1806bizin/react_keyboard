@@ -1,44 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-type AppState = {
-  pressedKey: string | null;
-};
+interface AppState {
+  pressedKey: string;
+}
 
-class App extends Component<{}, AppState> {
-  constructor(props: {}) {
-    super(props);
-    // eslint-disable-next-line react/state-in-constructor
-    this.state = {
-      pressedKey: null,
-    };
-  }
+export class App extends React.Component<{}, AppState> {
+  state: AppState = {
+    pressedKey: 'Nothing was pressed yet',
+  };
 
-  // Add the event listener on component mount
+  handleKeyUp = (event: KeyboardEvent) => {
+    this.setState({ pressedKey: `The last pressed key is [${event.key}]` });
+  };
+
   componentDidMount() {
     document.addEventListener('keyup', this.handleKeyUp);
   }
 
-  // Remove the event listener when the component is unmounted
   componentWillUnmount() {
     document.removeEventListener('keyup', this.handleKeyUp);
   }
 
-  // Update state when a key is pressed
-  handleKeyUp = (event: KeyboardEvent) => {
-    this.setState({ pressedKey: event.key });
-  };
-
   render() {
-    const { pressedKey } = this.state;
-
     return (
-      <div className="App__message">
-        {pressedKey
-          ? `The last pressed key is ${pressedKey}`
-          : 'Nothing was pressed yet'}
+      <div className="App">
+        <p className="App__message">{this.state.pressedKey}</p>
       </div>
     );
   }
 }
-
-export default App;
